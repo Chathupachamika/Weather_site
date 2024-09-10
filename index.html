@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How's Today Weather ?...🌤</title>
+    <link rel="icon" type="image/x-icon" href="img/icons8-forecast-48.png">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous">
+  </head>
+  <body style="background-color: black;">
+    <!--   
+    
+                                      ============================  HEADER  ============================ 
+        
+    -->
+    <header>
+      <nav>
+        <div class="nav-links" id="navLinks">
+          <i class="fa fa-times" onclick="hideMenu()"></i>
+          <div class="container">
+            <div
+              class="d-flex flex-wrap align-items-sm-end justify-content-center justify-content-lg-end">
+              <a href="/"
+                class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img"
+                  aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg>
+              </a>
+
+              <ul
+                class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"  data-aos="fade-left">
+                <li>
+                  <a href class="nav-link text-white">
+                    <img src="img/icons8-home-40.png" alt width="45">
+                    <svg class="bi d-block mx-auto mb-1" width="1"
+                      height="1"></svg>
+                    <b>HOME</b>
+                  </a>
+                </li>
+                <li>
+                  <a href="#current-weather" class="nav-link text-white">
+                    <img src="img/icons8-weather-50.png" alt width="45">
+                    <svg class="bi d-block mx-auto mb-1" width="1"
+                      height="1"></svg>
+                    <b>CURRENT</b>
+                  </a>
+                </li>
+                <li>
+                  <a href="#weather-forecast" class="nav-link text-white">
+                    <img src="img/icons8-forecast-48.png" alt width="45">
+                    <svg class="bi d-block mx-auto mb-1" width="1"
+                      height="1"></svg>
+                    <b>FORECAST</b>
+                  </a>
+                </li>
+                <li>
+                  <a href="#news" class="nav-link text-white">
+                    <img src="img/icons8-news-48.png" alt width="45">
+                    <svg class="bi d-block mx-auto mb-1" width="1"
+                      height="1"></svg>
+                    <b>NEWS</b>
+                  </a>
+                </li>
+                <li>
+                  <a href="#weather-map" class="nav-link text-white">
+                    <img src="img/icons8-map-50.png" alt width="45">
+                    <svg class="bi d-block mx-auto mb-1" width="1"
+                      height="1"></svg>
+                    <b>MAP</b>
+                  </a>
+                </li>
+                <li>
+                  <a href="#footer" class="nav-link text-white">
+                    <img src="img/icons8-subscribe-64.png" alt width="45">
+                    <svg class="bi d-block mx-auto mb-1" width="1"
+                      height="1"></svg>
+                    <b>SUBSCRIBE</b>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+          </nav>
+          <h1 class="title" data-aos="fade-right"><b>How is the weather Today ...... 🌞</b></h1>
+          <br><br>
+          <div class="user-interface" data-aos="fade-up">
+            <input type="text" id="location-input"
+              placeholder="Enter location" />
+            <button id="search-button">Search</button>
+          </div>
+        </header>
+
+        <!--   
+    
+                                  ============================  CURRENT  ============================  
+      
+    -->
+
+        <section id="current-weather" data-aos="zoom-out">
+          <h1 class="heders"><b>🌨️ CURRENT WEATHER ☃️</b></h1>
+          <div class="weather-card">
+            <div class="weather-icon">
+              <img class="weatherIcon" id="weatherIcon" alt="Weather Icon"
+                src="img/icons8-cloud-lightning-64.png" />
+            </div>
+            <div class="weather-info">
+              <h3 class="location name" id="location">Panadura</h3>
+              <p class="temperature temp_c">25°C</p>
+              <p class="description url">Cloudy</p>
+            </div>
+            <div class="weather-card3">
+              <div class="timeLbl" id="local-time"></div>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <br>
+            <table class="tblW">
+              <tr>
+                <td><dt><strong class="location1">Location</strong></dt>
+                <dt><img src="img/icons8-location-50.png" alt="" width="60"></dt></td>
+
+                <td><dt><strong class="temp1">Temperature</strong></dt>
+                  <dt>
+                    <img src="img/icons8-temperature-64.png" alt="" width="60">
+                  </dt></td>
+
+                <td><dt><strong class="humidity1">Humidity</strong></dt>
+                  <dt><img src="img/icons8-humidity-80.png" alt="" width="60"></dt></td>
+
+                <td><dt>
+                    <strong class="wind1">Wind Speed</strong>
+                  </dt>
+                  <dt><img src="img/icons8-wind-50.png" alt="" width="60"></dt></td>
+
+                <td><dt><strong class="condition1">Condition</strong></dt>
+                  <dt><img src="img/icons8-condition-64.png" alt="" width="60"></dt></td>
+
+                <td><dt><strong class="region1">Region</strong></dt>
+                  <dt><img src="img/icons8-region-64.png" alt="" width="60"></dt></td>
+
+                <td><dt><strong class="country1">Country</strong></dt>
+                  <dt><img src="img/icons8-country-100.png" alt="" width="60"></dt></td>
+
+                <td><dt><strong class="longitude1">longitude</strong></dt>
+                  <dt><img src="img/icons8-longitude-48.png" alt="" width="60"></dt></td>
+
+                <td><dt><strong class="latitude1">latitude</strong></dt>
+                  <dt><img src="img/icons8-latitude-48.png" alt="" width="60"></dt></td>
+
+              </tr>
+              <tr>
+                <td><span class="area no">Asia/colombo</span></td>
+                <td><span class="temp_c">25</span></td>
+                <td><span class="humidity">33</span></td>
+                <td><span class="wind_kmph">75.22</span></td>
+                <td class="url">Cloudy</td>
+                <td><span class="region">Western</span></td>
+                <td><span class="country">Sri-Lanka</span></td>
+                <td><span id="longitude">11.33</span></td>
+                <td><span id="latitude">20.55</span></td>
+              </tr>
+
+            </table>
+          </div>
+        </section>
+        <!-- 
+    -->
+        <br>
+          
+          <div class="row mb-2" style="background-color: rgb(118, 173, 221);">
+            <div class="col-md-6" data-aos="zoom-in-right">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-primary-emphasis"><b>World</b></strong>
+                  <h3 class="mb-0">Featured post</h3>
+                  <div class="mb-1 text-body-secondary">Nov 12</div>
+                  <p class="card-text mb-auto">This is a Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum recusandae voluptate illum quis laborum corrupti fugiat doloribus, amet eos mollitia, quisquam ut dicta ea, maxime ducimus? Nulla obcaecati id a? wider card with supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                    Continue reading
+                    <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                  </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                  <img src="img/eliya eka.jpg" alt="">                </div>
+              </div>
+            </div>
+            <div class="col-md-6" data-aos="zoom-in-left">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-success-emphasis"><b>Design</b></strong>
+                  <h3 class="mb-0">Post title</h3>
+                  <div class="mb-1 text-body-secondary">Nov 11</div>
+                  <p class="mb-auto">This is a wider card with Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, temporibus? Incidunt culpa ex vitae quibusdam maxime debitis quo repellendus amet dolores harum illum, rem quae corporis ut laudantium nisi nesciunt! supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                    Continue reading
+                    <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                  </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                  <img src="img/kudaakka.jpg" alt="">                   </div>
+              </div>
+            </div>
+          </div>
+        <!-- 
+                                  ============================  FORECAST  ============================
+    -->
+
+        <section id="weather-forecast" data-aos="zoom-out">
+          <h1 class="heders">🌦️ Weather Forecast 🥶</h1>
+          <hr>
+          <div class="weather-card2">
+            <div class="date-serch">
+              <b>To : </b><input id="startDate" type="date">&nbsp;&nbsp;&nbsp;
+              <b>End : </b><input id="endDate" type="date">
+              <hr><br>
+              <button style="background-color: rgb(85, 170, 92);"
+                onclick="searchForecast()"><b>Search Date</b></button>
+            </div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="tblForcast">
+            <tr>
+              <td>
+                <strong id="date1">2024-09-02</strong>
+              </td>
+              <td>
+                <strong id="date2">2024-09-03</strong>
+              </td>
+              <td>
+                <strong id="date3">2024-09-04</strong>
+              </td>
+              <td>
+                <strong id="date4">2024-09-05</strong>
+              </td>
+              <td>
+                <strong id="date5">2024-09-06</strong>
+              </td>
+              <td>
+                <strong id="date6">2024-09-07</strong>
+              </td>
+              <td>
+                <strong id="date7">2024-09-08</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img id="img1" class="img"
+                  src="img/icons8-cloud-lightning-100.png" alt>
+              </td>
+              <td>
+                <img id="img2" class="img" src="img/icons8-cloud-64.png" alt>
+              </td>
+              <td>
+                <img id="img3" class="img"
+                  src="img/icons8-cloud-lightning-64.png" alt>
+              </td>
+              <td>
+                <img id="img4" class="img" src="img/icons8-weather-50.png" alt>
+              </td>
+              <td>
+                <img id="img5" class="img" src="img/icons8-night-wind-50.png"
+                  alt>
+              </td>
+              <td>
+                <img id="img6" class="img" src="img/icons8-storm-100.png" alt>
+              </td>
+
+              <td>
+                <img id="img7" class="img" src="img/icons8-wind-50.png" alt>
+              </td>
+            </tr>
+            <tr>
+
+              <td>
+                <strong class="title1">Cloud lightning</strong>
+              </td>
+              <td>
+                <strong class="title2">Thunder cloud rain</strong>
+              </td>
+              <td>
+                <strong class="title3">Black sun rays</strong>
+              </td>
+              <td>
+                <strong class="title4">cloud-lightning</strong>
+              </td>
+              <td>
+                <strong class="title5">Cloud snow</strong>
+              </td>
+              <td>
+                <strong class="title6">Sun with face</strong>
+              </td>
+              <td>
+                <strong class="title7">night wind</strong>
+              </td>
+            </tr>
+
+          </table>
+        </div>
+      </section>
+      <!--  
+    -->
+
+      <!-- 
+                                    ============================  MAP  ============================
+    -->
+      <section id="weather-map" data-aos="zoom-out">
+        <h1 class="heders">✈️ Map 🌐</h1>
+        <div id="map" class="map-d">
+        </div>
+      </section>
+      <!-- -->
+      <!-- 
+                                    ============================  NEWS  ============================
+    -->
+      <section id="news" data-aos="zoom-out">
+        <h1 class="heders">🥶 Top stories🎗</h1>
+        <div class="grid-cols-1 sm:grid md:grid-cols-3" id="newswate">
+          <div
+            class="mx-3 mt-6 flex flex-col rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+            <a href="#!" id="a1">
+              <img id="imgN1" class="rounded-t-lg"
+                src="https://tecdn.b-cdn.net/img/new/standard/city/044.webp"
+                alt="Skyscrapers" />
+            </a>
+            <div class="p-6">
+              <h5 id="title1"
+                class="mb-2 text-xl font-medium leading-tight text-neutral-800">
+                <b>Title 1</b>
+              </h5>
+              <p id="p1" class="mb-4 text-base text-neutral-600">
+                This is a wider card with supporting text below as a natural Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, corporis voluptatum porro animi, commodi amet optio excepturi ullam temporibus, at obcaecati sint a autem provident itaque est cum similique repellat!
+                lead-in to additional content. This content is a little bit
+                longer.
+              </p>
+            </div>
+            <div
+              class="mt-auto border-t-2 border-neutral-100 px-6 py-3 text-center dark:border-neutral-600">
+              <small id="ptime1">Last updated 13 mins ago</small>
+            </div>
+          </div>
+          <div
+            class="mx-3 mt-6 flex flex-col rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+            <a href="#!" id="a2">
+              <img id="imgN2" class="rounded-t-lg"
+                src="https://tecdn.b-cdn.net/img/new/standard/city/043.webp"
+                alt="Los Angeles Skyscrapers" />
+            </a>
+            <div class="p-6">
+              <h5 id="title2"
+                class="mb-2 text-xl font-medium leading-tight text-neutral-800">
+                <b>Title 2</b>
+              </h5>
+              <p id="p2" class="mb-4 text-base text-neutral-600 ">
+                This card has supporting text below as a natural lead-in to
+                additional content.
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae a exercitationem perspiciatis nesciunt odit fugit porro omnis delectus nulla voluptates aliquid rem, voluptatem adipisci! Culpa et dignissimos numquam voluptatibus veritatis?
+              </p>
+            </div>
+            <div
+              class="mt-auto border-t-2 border-neutral-100 px-6 py-3 text-center dark:border-neutral-600">
+              <small id="ptime2">Last updated 24 mins ago</small>
+            </div>
+          </div>
+          <div
+            class="mx-3 mt-6 flex flex-col rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+            <a href="#!" id="a3">
+              <img id="imgN3" class="rounded-t-lg"
+                src="https://tecdn.b-cdn.net/img/new/standard/city/042.webp"
+                alt="Palm Springs Road" />
+            </a>
+            <div class="p-6">
+              <h5 id="title3"
+                class="mb-2 text-xl font-medium leading-tight text-neutral-800 ">
+               <b>Title 3</b>
+              </h5>
+              <p id="p3" class="mb-4 text-base text-neutral-600">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content. This card has even longloreer Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat beatae ipsam omnis non eveniet officia voluptatem atque maxime, nobis deleniti laborum expedita nisi animi harum asperiores quaerat quae quos dicta? content
+                than the first to show that equal height action.
+              </p>
+            </div>
+            <div
+              class="mt-auto border-t-2 border-neutral-100 px-6 py-3 text-center dark:border-neutral-600 ">
+              <small id="ptime3">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--   
+    
+                                  =========================  FOOTER   ================================== 
+
+    -->
+      <footer id="footer" data-aos="zoom-out">
+        <div
+          class="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32">
+          <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div
+              class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+              <div class="max-w-xl lg:max-w-lg">
+                <h2
+                  class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Subscribe now...
+                </h2>
+                <p class="mt-4 text-lg leading-8 text-gray-300">
+                  Nostrud amet eu ullamco nisi aute in ad minim nostrud Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa expedita veritatis dignissimos id harum ad ducimus, deserunt voluptates, labore incidunt iste nulla dolor esse reprehenderit! Sit aperiam ut nisi magni.
+                  adipisicing velit quis. Duis tempor incididunt dolore.
+                </p>
+                <div class="mt-6 flex max-w-md gap-x-4">
+                  <label for="email-address" class="sr-only">Email
+                    address</label>
+                  <input id="email-address" name="email" type="email"
+                    autocomplete="email" required
+                    class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    placeholder="Enter your email" />
+                  <button type="submit"
+                    class="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                    Subscribe
+                  </button>
+                </div>
+              </div>
+              <dl
+                class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
+                <div class="flex flex-col items-start">
+                  <div class="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+                    <svg class="h-6 w-6 text-white" fill="none"
+                      viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                    </svg>
+                  </div>
+                  <dt class="mt-4 font-semibold text-white">Weekly articles</dt>
+                  <dd class="mt-2 leading-7 text-gray-400">
+                    Non laboris consequat cupidatat laborum magna. Eiusmod non
+                    irure cupidatat duis commodo amet.lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae saepe deserunt doloribus tempore molestiae hic quae aperiam dolorum consequatur. Accusantium, vitae sunt ullam alias nulla sint numquam accusamus. Doloribus, et.
+                  </dd>
+                </div>
+                <div class="flex flex-col items-start">
+                  <div class="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+                    <svg class="h-6 w-6 text-white" fill="none"
+                      viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M10.05 4.575a1.575 1.575 0 10-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 013.15 0v1.5m-3.15 0l.075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 013.15 0V15M6.9 7.575a1.575 1.575 0 10-3.15 0v8.175a6.75 6.75 0 006.75 6.75h2.018a5.25 5.25 0 003.712-1.538l1.732-1.732a5.25 5.25 0 001.538-3.712l.003-2.024a.668.668 0 01.198-.471 1.575 1.575 0 10-2.228-2.228 3.818 3.818 0 00-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0116.35 15m.002 0h-.002" />
+                    </svg>
+                  </div>
+                  <dt class="mt-4 font-semibold text-white">No spam</dt>
+                  <dd class="mt-2 leading-7 text-gray-400">
+                    Officia excepteur ullamco ut sint duis proident non
+                    adipisicing. Voluptate incididunt anim.lorem Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel, hic voluptatem provident delectus libero repudiandae, corrupti molestias exercitationem velit qui perferendis, et sint sequi sed quasi aliquam quas nesciunt error!
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <div
+            class="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+            aria-hidden="true">
+          </div>
+        </div>
+      </footer>
+      <script src="https://cdn.tailwindcss.com"></script>
+
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin></script>
+      <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+      <script src="app.js"></script>
+      <script>
+       AOS.init({
+        duration: 3000
+       });
+     </script>
+    </body>
+  </html>
