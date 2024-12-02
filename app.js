@@ -1,7 +1,6 @@
 const apiKey = "4a758dd1aed04dc3950175920231609";
 const mapContainer = $("#map");
 
-// DOM Elements
 let country1 = $(".country");
 let id1 = $(".temp_c");
 let lat1 = $("#lat");
@@ -18,7 +17,6 @@ let marker;
 let latitude;
 let longitude;
 
-//===================== GET LOCATION =================
 function getLocation(){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -27,8 +25,6 @@ function getLocation(){
         alert("Geolocation is not supported by this browser.");
     }
 }
-
-//==================== SHOW POSITION ===================
 function showPosition(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
@@ -36,17 +32,14 @@ function showPosition(position) {
 
     const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
 
-    // Initialize map
     const map = L.map('map').setView([latitude, longitude], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    // Set marker
     marker = L.marker([latitude, longitude]).addTo(map);
 
-    // AJAX call for reverse geocoding
     $.ajax({
         method: "GET",
         url: geoApiUrl,
@@ -56,7 +49,6 @@ function showPosition(position) {
     });
 }
 
-//===================== HANDLE SEARCH =================
 function handleSearch() {
     const location = document.getElementById("location-input").value;
     fetchWeatherData(location);
@@ -64,7 +56,6 @@ function handleSearch() {
 
 document.getElementById("search-button").addEventListener("click", handleSearch);
 
-//===================== FETCH WEATHER DATA =================
 function fetchWeatherData(location) {
     $.ajax({
         method: "GET",
@@ -72,7 +63,6 @@ function fetchWeatherData(location) {
         success: function(response) {
             const { location, current } = response;
 
-            // Update UI
             country1.text(location.country);
             id1.text(`${current.temp_c}°C`);
             lat1.text(location.lat);
@@ -92,7 +82,6 @@ function fetchWeatherData(location) {
     });
 }
 
-//===================== UPDATE LOCAL TIME =================
 function updateLocalTime() {
     const localTimeElement = document.getElementById("local-time");
     const now = new Date();
@@ -102,7 +91,6 @@ function updateLocalTime() {
 
 setInterval(updateLocalTime, 1000);
 
-//===================== SEARCH FORECAST DATA =================
 function searchForecast() {
     const startDate = new Date(document.getElementById('startDate').value);
     const endDate = new Date(document.getElementById('endDate').value);
